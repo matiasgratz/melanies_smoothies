@@ -16,11 +16,10 @@ session = Session.builder.configs({
     "schema": "PUBLIC"
 }).create()
 
-# Streamlit code
-st.title("Snowpark UDF Example")
-input_value = st.number_input("Input a number")
-result = session.table("my_table").select(my_udf(input_value)).collect()
-st.write(f"Result: {result}")
+# Define and register a UDF
+@udf(session=session, return_type=Integer())
+def my_udf(x: int) -> int:
+    return x * 2
 
 # Write directly to the app
 st.title(":cup_with_straw: Customize your smoothie :cup_with_straw:")
