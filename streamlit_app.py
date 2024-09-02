@@ -1,11 +1,22 @@
 # Import python packages
 import streamlit as st
-from snowflake.snowpark.context import get_active_session
-from snowflake.snowpark.functions import col
+from snowflake.snowpark.context import Session
+from snowflake.snowpark.functions import col, udf
 
-cnx = st.connection("snowflake")
-session = cnx.session()
-session.udf.register(my_udf, name="my_udf")
+# Create a single Snowpark session
+session = Session.builder.configs({
+    "account": "my_account",
+    "user": "MGRATZ2",
+    "password": "6h#oiZgigEy2u3",
+    "warehouse": "COMPUTE_WH",
+    "database": "SMOOTHIES",
+    "schema": "PUBLIC"
+}).create()
+
+# Define and register a UDF
+@udf(session=session)
+def my_udf(x):
+    return x * 2
 
 # Write directly to the app
 st.title(":cup_with_straw: Customize your smoothie :cup_with_straw:")
