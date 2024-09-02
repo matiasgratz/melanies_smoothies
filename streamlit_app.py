@@ -7,9 +7,6 @@ from snowflake.snowpark.functions import col
 cnx = st.connection("snowflake")
 session = cnx.session()
 
-fruityvice_response = requests.get("https://fruityvice.com/api/fruit/watermelon")
-st.text(fruityvice_response)
-
 # Write directly to the app
 st.title(":cup_with_straw: Customize your smoothie :cup_with_straw:")
 
@@ -34,3 +31,6 @@ if ingredients_list:
      if time_to_insert:
         session.sql(my_insert_stmt).collect()
         st.success('Your Smoothie is ordered!'+ name_on_order, icon="✅")
+
+fruityvice_response = requests.get("https://fruityvice.com/api/fruit/watermelon")
+st.text(fruityvice_response.json())
