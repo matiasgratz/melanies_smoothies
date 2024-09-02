@@ -8,7 +8,7 @@ from snowflake.snowpark.functions import udf
 
 # Create a single Snowpark session
 session = Session.builder.configs({
-    "account": "my_account",
+    "account": "VEICLSU-PC92155",
     "user": "MGRATZ2",
     "password": "6h#oiZgigEy2u3",
     "warehouse": "COMPUTE_WH",
