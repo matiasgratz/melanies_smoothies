@@ -5,6 +5,7 @@ from snowflake.snowpark.functions import col
 
 cnx = st.connection("snowflake")
 session = cnx.session()
+session.udf.register(my_udf, name="my_udf")
 
 # Write directly to the app
 st.title(":cup_with_straw: Customize your smoothie :cup_with_straw:")
