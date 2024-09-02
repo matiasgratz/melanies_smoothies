@@ -16,11 +16,6 @@ session = Session.builder.configs({
     "schema": "PUBLIC"
 }).create()
 
-# Define and register a UDF
-@udf(session=session, return_type=IntegerType())
-def my_udf(x: int) -> int:
-    return x * 2
-
 # Streamlit code
 st.title("Snowpark UDF Example")
 input_value = st.number_input("Input a number")
