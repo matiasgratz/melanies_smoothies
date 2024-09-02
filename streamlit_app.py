@@ -2,6 +2,30 @@
 import streamlit as st
 from snowflake.snowpark.context import get_active_session
 from snowflake.snowpark.functions import col
+import streamlit as st
+from snowflake.snowpark import Session
+from snowflake.snowpark.functions import udf
+
+# Create a single Snowpark session
+session = Session.builder.configs({
+    "account": "my_account",
+    "user": "MGRATZ2",
+    "password": "6h#oiZgigEy2u3",
+    "warehouse": "COMPUTE_WH",
+    "database": "SMOOTHIES",
+    "schema": "PUBLIC"
+}).create()
+
+# Define and register a UDF
+@udf(session=session)
+def my_udf(x):
+    return x * 2
+
+# Streamlit code
+st.title("Snowpark UDF Example")
+input_value = st.number_input("Input a number")
+result = session.table("my_table").select(my_udf(input_value)).collect()
+st.write(f"Result: {result}")
 
 # Write directly to the app
 st.title(":cup_with_straw: Customize your smoothie :cup_with_straw:")
@@ -9,7 +33,7 @@ st.title(":cup_with_straw: Customize your smoothie :cup_with_straw:")
 name_on_order = st.text_input("Name on Smoothie")
 st.write("The name on your smoothie will be", name_on_order)
 
-session = get_active_session()
+# session = get_active_session()
 my_dataframe = session.table("smoothies.public.fruit_options").select(col('FRUIT_NAME'))
 #st.dataframe(data=my_dataframe, use_container_width=True)
 ingredients_list =  st.multiselect(
