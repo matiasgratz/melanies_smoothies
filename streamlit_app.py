@@ -17,8 +17,8 @@ session = Session.builder.configs({
 }).create()
 
 # Define and register a UDF
-@udf(session=session)
-def my_udf(x):
+@udf(session=session, return_type=IntegerType())
+def my_udf(x: int) -> int:
     return x * 2
 
 # Streamlit code
