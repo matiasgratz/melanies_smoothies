@@ -17,9 +17,10 @@ session = Session.builder.configs({
 }).create()
 
 # Define and register a UDF
-@udf(session=session, return_type=Integer())
+@udf(session=session, return_type=IntegerType())
 def my_udf(x: int) -> int:
     return x * 2
+
 
 # Write directly to the app
 st.title(":cup_with_straw: Customize your smoothie :cup_with_straw:")
