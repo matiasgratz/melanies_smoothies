@@ -1,10 +1,14 @@
 # Import python packages
 import streamlit as st
+import requests
 from snowflake.snowpark.context import get_active_session
 from snowflake.snowpark.functions import col
 
 cnx = st.connection("snowflake")
 session = cnx.session()
+
+fruityvice_response = requests.get("https://fruityvice.com/api/fruit/watermelon")
+st.text(fruityvice_response)
 
 # Write directly to the app
 st.title(":cup_with_straw: Customize your smoothie :cup_with_straw:")
